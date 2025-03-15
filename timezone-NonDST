@@ -1,0 +1,46 @@
+import Foundation
+
+func convertTimeZone(date: String, time: String, fromTimeZone: String, toTimeZone: String) {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+    dateFormatter.timeZone = TimeZone(identifier: fromTimeZone)
+    
+    guard let dateObject = dateFormatter.date(from: "\(date) \(time)") else {
+        print("Invalid date/time input")
+        return
+    }
+    
+    let fromTZ = TimeZone(identifier: fromTimeZone) ?? TimeZone.current
+    let toTZ = TimeZone(identifier: toTimeZone) ?? TimeZone.current
+    
+    let fromOffset = fromTZ.secondsFromGMT(for: dateObject) / 3600
+    let toOffset = toTZ.secondsFromGMT(for: dateObject) / 3600
+    
+    let calendar = Calendar.current
+    let weekday = calendar.component(.weekday, from: dateObject)
+    
+    let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    let fromWeekday = daysOfWeek[weekday - 1]
+    
+    let toDateObject = dateObject.addingTimeInterval(TimeInterval((toOffset - fromOffset) * 3600))
+    let toWeekday = daysOfWeek[calendar.component(.weekday, from: toDateObject) - 1]
+    
+    let formattedFrom = dateFormatter.string(from: dateObject)
+    let formattedTo = dateFormatter.string(from: toDateObject)
+    
+    print("From = \(formattedFrom) (\(fromWeekday)) at UTC \(fromOffset >= 0 ? "+" : "")\(fromOffset):00.")
+    print("Is the same time as")
+    print("To = \(formattedTo) (\(toWeekday)) at UTC \(toOffset >= 0 ? "+" : "")\(toOffset):00.")
+}
+
+// Example Usage:
+convertTimeZone(date: "2025-03-20", time: "11:00", fromTimeZone: "Asia/Bangkok", toTimeZone: "America/Chicago")
+
+
+// result 
+
+/*
+From = 2025-03-20 11:00 (Thursday) at UTC +7:00.
+Is the same time as
+To = 2025-03-19 22:00 (Wednesday) at UTC -6:00.
+*/
