@@ -37,7 +37,7 @@ func convertTimeZone(date: String, time: String, fromTimeZone: String, toTimeZon
 convertTimeZone(date: "2025-03-20", time: "11:00", fromTimeZone: "Asia/Bangkok", toTimeZone: "America/Chicago")
 
 
-// result 
+// result output :
 
 /*
 From = 2025-03-20 11:00 (Thursday) at UTC +7:00.
