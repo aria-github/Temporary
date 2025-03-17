@@ -46,7 +46,7 @@ for utcOffset in sortedTimeZones {
 }
 
 
-// result
+// result output :
 
 /*
 - UTC-1  : portugal/azores
