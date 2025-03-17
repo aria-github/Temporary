@@ -1,0 +1,110 @@
+import Foundation
+
+// A dictionary mapping UTC offsets to countries and their major cities
+let countryTimeZones: [String: [(country: String, city: String)]] = [
+    "UTC-12": [("United States", "Baker Island")],
+    "UTC-11": [("United States", "Pago Pago"), ("Samoa", "Apia")],
+    "UTC-10": [("United States", "Honolulu"), ("French Polynesia", "Papeete")],
+    "UTC-9 ": [("United States", "Anchorage")],
+    "UTC-8 ": [("United States", "Los Angeles"), ("Canada", "Vancouver")],
+    "UTC-7 ": [("United States", "Denver"), ("Canada", "Calgary"), ("Mexico", "Chihuahua")],
+    "UTC-6 ": [("United States", "Chicago"), ("Canada", "Winnipeg"), ("Mexico", "Mexico City")],
+    "UTC-5 ": [("United States", "New York"), ("Canada", "Toronto"), ("Colombia", "Bogotá"), ("Ecuador", "Quito")],
+    "UTC-4 ": [("Canada", "Halifax"), ("Venezuela", "Caracas"), ("Bolivia", "La Paz")],
+    "UTC-3 ": [("Argentina", "Buenos Aires"), ("Brazil", "São Paulo"), ("Chile", "Santiago")],
+    "UTC-2 ": [("Brazil", "Fernando de Noronha")],
+    "UTC-1 ": [("Portugal", "Azores")],
+    "UTC+0 ": [("United Kingdom", "London"), ("Ireland", "Dublin"), ("Portugal", "Lisbon")],
+    "UTC+1 ": [("France", "Paris"), ("Germany", "Berlin"), ("Spain", "Madrid"), ("Italy", "Rome")],
+    "UTC+2 ": [("South Africa", "Johannesburg"), ("Greece", "Athens"), ("Turkey", "Istanbul")],
+    "UTC+3 ": [("Russia", "Moscow"), ("Saudi Arabia", "Riyadh"), ("Kenya", "Nairobi")],
+    "UTC+4 ": [("United Arab Emirates", "Dubai"), ("Oman", "Muscat")],
+    "UTC+5 ": [("Pakistan", "Karachi"), ("Uzbekistan", "Tashkent")],
+    "UTC+6 ": [("Bangladesh", "Dhaka"), ("Kazakhstan", "Almaty")],
+    "UTC+7 ": [("Indonesia", "Jakarta"), ("Thailand", "Bangkok"), ("Vietnam", "Hanoi")],
+    "UTC+8 ": [("China", "Beijing"), ("Malaysia", "Kuala Lumpur"), ("Singapore", "Singapore")],
+    "UTC+9 ": [("Japan", "Tokyo"), ("South Korea", "Seoul")],
+    "UTC+10": [("Australia", "Sydney"), ("Papua New Guinea", "Port Moresby")],
+    "UTC+11": [("Solomon Islands", "Honiara")],
+    "UTC+12": [("New Zealand", "Auckland"), ("Fiji", "Suva")]
+]
+
+// Sorting the dictionary keys to maintain sequential order
+let sortedTimeZones = countryTimeZones.keys.sorted {
+    let first = $0.replacingOccurrences(of: "UTC", with: "")
+    let second = $1.replacingOccurrences(of: "UTC", with: "")
+    return first.localizedStandardCompare(second) == .orderedAscending
+}
+
+// Printing the results in sequential order
+for utcOffset in sortedTimeZones {
+    if let locations = countryTimeZones[utcOffset] {
+        for (country, city) in locations {
+            print("- \(utcOffset) : \(country.lowercased())/\(city.lowercased())")
+        }
+    }
+}
+
+
+// result
+
+/*
+- UTC-1  : portugal/azores
+- UTC-2  : brazil/fernando de noronha
+- UTC-3  : argentina/buenos aires
+- UTC-3  : brazil/são paulo
+- UTC-3  : chile/santiago
+- UTC-4  : canada/halifax
+- UTC-4  : venezuela/caracas
+- UTC-4  : bolivia/la paz
+- UTC-5  : united states/new york
+- UTC-5  : canada/toronto
+- UTC-5  : colombia/bogotá
+- UTC-5  : ecuador/quito
+- UTC-6  : united states/chicago
+- UTC-6  : canada/winnipeg
+- UTC-6  : mexico/mexico city
+- UTC-7  : united states/denver
+- UTC-7  : canada/calgary
+- UTC-7  : mexico/chihuahua
+- UTC-8  : united states/los angeles
+- UTC-8  : canada/vancouver
+- UTC-9  : united states/anchorage
+- UTC-10 : united states/honolulu
+- UTC-10 : french polynesia/papeete
+- UTC-11 : united states/pago pago
+- UTC-11 : samoa/apia
+- UTC-12 : united states/baker island
+- UTC+0  : united kingdom/london
+- UTC+0  : ireland/dublin
+- UTC+0  : portugal/lisbon
+- UTC+1  : france/paris
+- UTC+1  : germany/berlin
+- UTC+1  : spain/madrid
+- UTC+1  : italy/rome
+- UTC+2  : south africa/johannesburg
+- UTC+2  : greece/athens
+- UTC+2  : turkey/istanbul
+- UTC+3  : russia/moscow
+- UTC+3  : saudi arabia/riyadh
+- UTC+3  : kenya/nairobi
+- UTC+4  : united arab emirates/dubai
+- UTC+4  : oman/muscat
+- UTC+5  : pakistan/karachi
+- UTC+5  : uzbekistan/tashkent
+- UTC+6  : bangladesh/dhaka
+- UTC+6  : kazakhstan/almaty
+- UTC+7  : indonesia/jakarta
+- UTC+7  : thailand/bangkok
+- UTC+7  : vietnam/hanoi
+- UTC+8  : china/beijing
+- UTC+8  : malaysia/kuala lumpur
+- UTC+8  : singapore/singapore
+- UTC+9  : japan/tokyo
+- UTC+9  : south korea/seoul
+- UTC+10 : australia/sydney
+- UTC+10 : papua new guinea/port moresby
+- UTC+11 : solomon islands/honiara
+- UTC+12 : new zealand/auckland
+- UTC+12 : fiji/suva
+*/
